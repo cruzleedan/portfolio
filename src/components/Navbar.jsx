@@ -3,21 +3,24 @@ import {
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+} from '@/components/ui/navigation-menu';
 
-import ThemeDropdown from "./ThemeDropdown";
+import ThemeDropdown from './ThemeDropdown';
 const Navbar = () => {
   return (
     <NavigationMenu>
-      <NavigationMenuList className="flex space-x-4">
+      <NavigationMenuList className='flex space-x-4'>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#home">Home</NavigationMenuLink>
+          <NavigationMenuLink href='#projects'>Projects</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#about">About</NavigationMenuLink>
+          <NavigationMenuLink href='#skills'>Skills</NavigationMenuLink>
         </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuLink href="#projects">Projects</NavigationMenuLink>
+          <NavigationMenuLink href='#experience'>Experience</NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href='#contact'>Contact</NavigationMenuLink>
         </NavigationMenuItem>
         <ThemeDropdown />
       </NavigationMenuList>
