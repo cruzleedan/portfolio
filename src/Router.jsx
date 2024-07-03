@@ -4,19 +4,24 @@ import App from './App';
 import HomePage from './pages/HomePage';
 import NotFoundPage from './pages/NotFoundPage';
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: '/',
+      element: <App />,
+      errorElement: <NotFoundPage />,
+      children: [
+        {
+          path: '/',
+          element: <HomePage />,
+        },
+      ],
+    },
+  ],
   {
-    path: '/',
-    element: <App />,
-    errorElement: <NotFoundPage />,
-    children: [
-      {
-        path: '/',
-        element: <HomePage />,
-      },
-    ],
+    basename: '/portfolio',
   },
-]);
+);
 const Router = () => <RouterProvider router={router} />;
 
 export default Router;
