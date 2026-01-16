@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { Menu, X, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/contexts/ThemeContext'
 
@@ -16,6 +16,29 @@ export default function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const { theme, toggleTheme } = useTheme()
+  const navigate = useNavigate()
+  const location = useLocation()
+
+  const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault()
+    // If we're not on the home page, navigate to home first
+    if (location.pathname !== '/') {
+      navigate('/')
+      // Wait for navigation then scroll
+      setTimeout(() => {
+        const element = document.getElementById(href.substring(1))
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
+    } else {
+      // We're on home, just scroll
+      const element = document.getElementById(href.substring(1))
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+      }
+    }
+  }
 
   useEffect(() => {
     const handleScroll = () => {
@@ -51,6 +74,7 @@ export default function Navigation() {
                 <a
                   key={item.name}
                   href={item.href}
+                  onClick={(e) => handleAnchorClick(e, item.href)}
                   className="text-foreground hover:text-primary transition-colors font-medium"
                 >
                   {item.name}
@@ -103,7 +127,10 @@ export default function Navigation() {
                     key={item.name}
                     href={item.href}
                     className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                    onClick={() => setIsMobileMenuOpen(false)}
+                    onClick={(e) => {
+                      handleAnchorClick(e, item.href)
+                      setIsMobileMenuOpen(false)
+                    }}
                   >
                     {item.name}
                   </a>
