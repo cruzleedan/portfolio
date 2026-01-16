@@ -38,7 +38,7 @@ const BlogPost = () => {
 
       for (const path in postModules) {
         const content = await postModules[path]();
-        const { data } = matter(content);
+        const { data } = matter(content as string);
         const postSlug = path.replace('/posts/', '').replace('.md', '');
 
         loadedPosts.push({
