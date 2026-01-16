@@ -1,4 +1,4 @@
-import { HashRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navigation from './components/Navigation'
 import Hero from './components/Hero'
 import About from './components/About'
@@ -25,7 +25,7 @@ function HomePage() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/portfolio">
       <div className="min-h-screen">
         <Navigation />
         <main>
