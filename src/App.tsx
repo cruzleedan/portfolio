@@ -25,7 +25,7 @@ function HomePage() {
 
 function App() {
   return (
-    <Router>
+    <Router basename="/portfolio">
       <div className="min-h-screen">
         <Navigation />
         <main>
