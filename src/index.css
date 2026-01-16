@@ -53,3 +53,50 @@
 html {
   scroll-behavior: smooth;
 }
+
+/* Blog post markdown styles */
+.prose {
+  @apply text-foreground;
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
+  @apply text-foreground font-bold;
+}
+
+.prose a {
+  @apply text-primary hover:underline;
+}
+
+.prose strong {
+  @apply text-foreground font-bold;
+}
+
+.prose code {
+  @apply bg-secondary text-secondary-foreground px-1 py-0.5 rounded text-sm;
+}
+
+.prose pre {
+  @apply bg-secondary p-4 rounded-lg overflow-x-auto;
+}
+
+.prose pre code {
+  @apply bg-transparent p-0;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-primary pl-4 italic;
+}
+
+.prose ul,
+.prose ol {
+  @apply ml-6;
+}
+
+.prose img {
+  @apply rounded-lg;
+}

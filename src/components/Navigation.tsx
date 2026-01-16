@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Moon, Sun } from 'lucide-react'
 import { useTheme } from '@/contexts/ThemeContext'
 
 const navItems = [
-  { name: 'Home', href: '#home' },
-  { name: 'About', href: '#about' },
-  { name: 'Projects', href: '#projects' },
-  { name: 'Skills', href: '#skills' },
-  { name: 'Contact', href: '#contact' },
+  { name: 'Home', href: '/', type: 'route' },
+  { name: 'About', href: '#about', type: 'anchor' },
+  { name: 'Projects', href: '#projects', type: 'anchor' },
+  { name: 'Skills', href: '#skills', type: 'anchor' },
+  { name: 'Blog', href: '/blog', type: 'route' },
+  { name: 'Contact', href: '#contact', type: 'anchor' },
 ]
 
 export default function Navigation() {
@@ -37,13 +39,23 @@ export default function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="text-foreground hover:text-primary transition-colors font-medium"
-              >
-                {item.name}
-              </a>
+              item.type === 'route' ? (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  {item.name}
+                </Link>
+              ) : (
+                <a
+                  key={item.name}
+                  href={item.href}
+                  className="text-foreground hover:text-primary transition-colors font-medium"
+                >
+                  {item.name}
+                </a>
+              )
             ))}
             <button
               onClick={toggleTheme}
@@ -77,14 +89,25 @@ export default function Navigation() {
           <div className="md:hidden py-4 border-t">
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  className="text-foreground hover:text-primary transition-colors font-medium py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.name}
-                </a>
+                item.type === 'route' ? (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </Link>
+                ) : (
+                  <a
+                    key={item.name}
+                    href={item.href}
+                    className="text-foreground hover:text-primary transition-colors font-medium py-2"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.name}
+                  </a>
+                )
               ))}
             </div>
           </div>
