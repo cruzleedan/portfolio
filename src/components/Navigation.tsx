@@ -24,6 +24,13 @@ export default function Navigation() {
     if (location.pathname !== '/') {
       e.preventDefault()
       navigate(`/${href}`)
+      // Wait for navigation, then scroll to the element
+      setTimeout(() => {
+        const element = document.getElementById(href.substring(1))
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' })
+        }
+      }, 100)
     }
     // If we're on home, let the default anchor behavior work (keeps hash in URL)
   }
