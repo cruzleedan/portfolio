@@ -79,39 +79,31 @@ When we started this project, our key requirements were:
 
 ### High-Level Architecture
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│                     Flutter Mobile App                       │
-├─────────────────────────────────────────────────────────────┤
-│  Presentation Layer (UI/Widgets)                            │
-│  ├── Screens                                                │
-│  ├── Widgets                                                │
-│  └── Theme/Styling                                          │
-├─────────────────────────────────────────────────────────────┤
-│  Business Logic Layer                                       │
-│  ├── State Management [BLoC/Riverpod/Provider]            │
-│  ├── View Models                                           │
-│  └── Business Rules                                        │
-├─────────────────────────────────────────────────────────────┤
-│  Domain Layer                                               │
-│  ├── Entities                                              │
-│  ├── Use Cases                                             │
-│  └── Repository Interfaces                                 │
-├─────────────────────────────────────────────────────────────┤
-│  Data Layer                                                 │
-│  ├── Repository Implementations                            │
-│  ├── Data Sources (Remote/Local)                          │
-│  ├── Local Database (SQLite/Hive/Isar)                    │
-│  └── API Client                                            │
-└─────────────────────────────────────────────────────────────┘
-                            ↓
-┌─────────────────────────────────────────────────────────────┐
-│                    ERP Backend Services                      │
-│  ├── REST/GraphQL APIs                                      │
-│  ├── Authentication Service                                 │
-│  ├── Business Logic Services                               │
-│  └── Database                                               │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph Flutter["Flutter Mobile App"]
+        Presentation["Presentation Layer<br/>(UI/Widgets)<br/>├── Screens<br/>├── Widgets<br/>└── Theme/Styling"]
+        Business["Business Logic Layer<br/>├── State Management<br/>├── View Models<br/>└── Business Rules"]
+        Domain["Domain Layer<br/>├── Entities<br/>├── Use Cases<br/>└── Repository Interfaces"]
+        Data["Data Layer<br/>├── Repository Implementations<br/>├── Data Sources (Remote/Local)<br/>├── Local Database (SQLite/Hive/Isar)<br/>└── API Client"]
+
+        Presentation --> Business
+        Business --> Domain
+        Domain --> Data
+    end
+
+    subgraph Backend["ERP Backend Services"]
+        API["REST/GraphQL APIs"]
+        Auth["Authentication Service"]
+        BL["Business Logic Services"]
+        DB["Database"]
+    end
+
+    Data --> API
+    Data --> Auth
+
+    style Flutter fill:#e3f2fd
+    style Backend fill:#fff3e0
 ```
 
 ### Architectural Principles
@@ -207,17 +199,20 @@ class CustomerListViewModel extends ChangeNotifier {
 
 **Multi-level caching approach:**
 
-```
-Request Flow:
-1. Check in-memory cache (fastest)
-   ↓ (miss)
-2. Check local database
-   ↓ (miss)
-3. Fetch from API
-   ↓
-4. Update local database
-   ↓
-5. Update in-memory cache
+```mermaid
+flowchart TD
+    A[Request Data] --> B{In-Memory<br/>Cache?}
+    B -->|Hit| C[Return Data]
+    B -->|Miss| D{Local<br/>Database?}
+    D -->|Hit| E[Update Memory Cache]
+    E --> C
+    D -->|Miss| F[Fetch from API]
+    F --> G[Update Local Database]
+    G --> E
+
+    style A fill:#e3f2fd
+    style C fill:#c8e6c9
+    style F fill:#fff9c4
 ```
 
 **Implementation:**
@@ -447,33 +442,21 @@ class CustomerListState with _$CustomerListState {
 
 ### Sync Architecture
 
-```
-┌──────────────────────────────────────────────┐
-│            User Action                        │
-└───────────────┬──────────────────────────────┘
-                │
-                ↓
-┌──────────────────────────────────────────────┐
-│         Local Database (SQLite)               │
-│         (Immediate write)                     │
-└───────────────┬──────────────────────────────┘
-                │
-                ↓
-┌──────────────────────────────────────────────┐
-│         Sync Queue                            │
-│         (Pending operations)                  │
-└───────────────┬──────────────────────────────┘
-                │
-                ↓ (when online)
-┌──────────────────────────────────────────────┐
-│         Background Sync Service               │
-│         (Processes queue)                     │
-└───────────────┬──────────────────────────────┘
-                │
-                ↓
-┌──────────────────────────────────────────────┐
-│         Remote API                            │
-└──────────────────────────────────────────────┘
+```mermaid
+flowchart TD
+    A[User Action] --> B[Local Database SQLite<br/>Immediate write]
+    B --> C[Sync Queue<br/>Pending operations]
+    C -->|When Online| D[Background Sync Service<br/>Processes queue]
+    D --> E[Remote API]
+    E -->|Success| F[Update Sync Status]
+    E -->|Failure| G[Retry with<br/>Exponential Backoff]
+    G --> D
+
+    style A fill:#e3f2fd
+    style B fill:#c8e6c9
+    style C fill:#fff9c4
+    style D fill:#ffccbc
+    style E fill:#f8bbd0
 ```
 
 ### Conflict Resolution

@@ -1,10 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
+import rehypeSlug from 'rehype-slug';
 import matter from 'gray-matter';
 import { Buffer } from 'buffer';
 import { ArrowLeft, Clock } from 'lucide-react';
+import MermaidDiagram from './MermaidDiagram';
 
 (window as any).Buffer = Buffer;
 
@@ -21,11 +23,100 @@ interface PostListItem {
   date: string;
 }
 
+interface TocItem {
+  id: string;
+  text: string;
+  level: number;
+}
+
 const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<PostData | null>(null);
   const [allPosts, setAllPosts] = useState<PostListItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [toc, setToc] = useState<TocItem[]>([]);
+  const [activeId, setActiveId] = useState<string>('');
+  const isScrollingRef = useRef(false);
+
+  // Memoize components to prevent re-rendering on activeId change
+  const markdownComponents = useMemo(() => ({
+    code(props: any) {
+      const { node, className, children, ...rest } = props;
+      const match = /language-(\w+)/.exec(className || '');
+      const language = match ? match[1] : '';
+
+      if (language === 'mermaid') {
+        return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />;
+      }
+
+      return (
+        <code className={className} {...rest}>
+          {children}
+        </code>
+      );
+    }
+  }), []);
+
+  // Extract table of contents from markdown
+  const extractToc = (markdown: string): TocItem[] => {
+    const headingRegex = /^(#{2,3})\s+(.+)$/gm;
+    const items: TocItem[] = [];
+    let match;
+
+    while ((match = headingRegex.exec(markdown)) !== null) {
+      const level = match[1].length;
+      const text = match[2].trim();
+      // Convert heading to slug (same as react-markdown does)
+      const id = text
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
+
+      items.push({ id, text, level });
+    }
+
+    return items;
+  };
+
+  // Track active section while scrolling
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout;
+
+    const handleScroll = () => {
+      // Skip tracking if user initiated smooth scroll
+      if (isScrollingRef.current) {
+        return;
+      }
+
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+
+      timeoutId = setTimeout(() => {
+        const headings = toc.map(item => document.getElementById(item.id)).filter(Boolean);
+        let currentActiveId = '';
+
+        for (let i = headings.length - 1; i >= 0; i--) {
+          const heading = headings[i];
+          if (heading && heading.getBoundingClientRect().top <= 150) {
+            currentActiveId = heading.id;
+            break;
+          }
+        }
+
+        setActiveId(prev => prev !== currentActiveId ? currentActiveId : prev);
+      }, 100);
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [toc]);
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -75,6 +166,9 @@ const BlogPost = () => {
           tags: data.tags || [],
           content: markdownContent,
         });
+
+        // Extract table of contents
+        setToc(extractToc(markdownContent));
       } catch (error) {
         console.error('Error loading post:', error);
         setPost(null);
@@ -114,6 +208,7 @@ const BlogPost = () => {
     <div className="min-h-screen py-20 px-4">
       <div className="max-w-7xl mx-auto">
         <div className="flex gap-8">
+          {/* Left Sidebar - Other Posts */}
           <aside className="hidden lg:block w-64 shrink-0">
             <div className="sticky top-24">
               <Link to="/blog" className="text-primary hover:underline inline-flex items-center gap-2 mb-6">
@@ -140,6 +235,8 @@ const BlogPost = () => {
               </nav>
             </div>
           </aside>
+
+          {/* Main Content */}
           <article className="flex-1 max-w-3xl">
             <Link to="/blog" className="lg:hidden text-primary hover:underline inline-flex items-center gap-2 mb-8">
               <ArrowLeft className="w-4 h-4" />
@@ -161,11 +258,57 @@ const BlogPost = () => {
               )}
             </header>
             <div className="prose prose-slate dark:prose-invert max-w-none">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeSlug]}
+                components={markdownComponents}
+              >
                 {post.content}
               </ReactMarkdown>
             </div>
           </article>
+
+          {/* Right Sidebar - Table of Contents */}
+          {toc.length > 0 && (
+            <aside className="hidden xl:block w-64 shrink-0">
+              <div className="sticky top-24 max-h-[calc(100vh-8rem)] overflow-y-auto">
+                <h3 className="font-semibold mb-4 text-sm uppercase tracking-wide text-muted-foreground">
+                  On This Page
+                </h3>
+                <nav className="space-y-2 pr-2">
+                  {toc.map((item) => (
+                    <a
+                      key={item.id}
+                      href={`#${item.id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        isScrollingRef.current = true;
+
+                        const element = document.getElementById(item.id);
+                        if (element) {
+                          const yOffset = -100;
+                          const y = element.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                          window.scrollTo({ top: y, behavior: 'smooth' });
+
+                          // Re-enable scroll tracking after smooth scroll completes
+                          setTimeout(() => {
+                            isScrollingRef.current = false;
+                            setActiveId(item.id);
+                          }, 1000);
+                        }
+                      }}
+                      className={`block text-sm transition-colors py-1 border-l-2 pl-3 ${activeId === item.id
+                        ? 'border-primary text-primary font-medium'
+                        : 'border-transparent text-muted-foreground hover:text-foreground hover:border-muted-foreground'
+                        } ${item.level === 3 ? 'pl-6' : ''}`}
+                    >
+                      {item.text}
+                    </a>
+                  ))}
+                </nav>
+              </div>
+            </aside>
+          )}
         </div>
       </div>
     </div>

@@ -8,8 +8,9 @@
       "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome against localhost",
-      "url": "http://localhost:5173",
-      "webRoot": "${workspaceFolder}"
+      "url": "http://localhost:5173/portfolio/",
+      "webRoot": "${workspaceFolder}",
+      "preLaunchTask": "Run Dev Server"
     }
   ]
 }
