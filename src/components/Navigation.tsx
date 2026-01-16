@@ -20,24 +20,12 @@ export default function Navigation() {
   const location = useLocation()
 
   const handleAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault()
-    // If we're not on the home page, navigate to home first
+    // If we're not on the home page, navigate to home with the hash
     if (location.pathname !== '/') {
-      navigate('/')
-      // Wait for navigation then scroll
-      setTimeout(() => {
-        const element = document.getElementById(href.substring(1))
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' })
-        }
-      }, 100)
-    } else {
-      // We're on home, just scroll
-      const element = document.getElementById(href.substring(1))
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' })
-      }
+      e.preventDefault()
+      navigate(`/${href}`)
     }
+    // If we're on home, let the default anchor behavior work (keeps hash in URL)
   }
 
   useEffect(() => {
