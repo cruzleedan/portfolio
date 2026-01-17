@@ -19,7 +19,7 @@ Fill in the sections below with your personal information. Remove any sections y
 
 ## Professional Summary
 
-Software engineer with 9+ years building enterprise mobile and web applications, currently leading Flutter development for an ERP SaaS platform. Specialized in scalable mobile architecture, full-stack development, and AI-assisted coding practices. Passionate about performance optimization, clean architecture, and modernizing legacy systems with cutting-edge technologies.
+Software engineer with 9+ years building enterprise mobile and web applications. Currently leading Flutter mobile development (team of 2) for a mobile application within an ERP SaaS platform. Specialized in scalable mobile architecture, full-stack development, and AI-assisted coding practices.
 
 ---
 

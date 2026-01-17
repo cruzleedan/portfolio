@@ -11,20 +11,12 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              I'm a Principal Software Engineer with 9+ years of experience building enterprise
-              mobile and web applications. Currently leading Flutter development for an ERP SaaS
-              platform at Deltek, where I architect scalable, high-performance solutions with
-              emphasis on clean architecture principles.
+              Principal Software Engineer with 9+ years building enterprise mobile and web applications.
+              Currently leading Flutter development at Deltek, architecting scalable solutions for ERP systems.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              My journey spans from modernizing legacy systems to building cutting-edge mobile
-              applications. I specialize in Flutter, full-stack development, and leveraging AI-assisted
-              coding practices to enhance development velocity and code quality.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              I'm passionate about performance optimization, clean architecture, and creating
-              exceptional user experiences. I believe in continuous learning and staying at the
-              forefront of technology to deliver robust, maintainable solutions.
+              My expertise spans mobile architecture, full-stack development, and AI-assisted coding.
+              I focus on performance optimization, clean code, and delivering exceptional user experiences.
             </p>
           </div>
 

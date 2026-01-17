@@ -16,9 +16,8 @@ export default function Hero() {
           </div>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            Software engineer with 9+ years building enterprise mobile and web applications,
-            currently leading Flutter development for an ERP SaaS platform. Specialized in scalable
-            mobile architecture, full-stack development, and AI-assisted coding practices.
+            9+ years building enterprise mobile and web applications. Leading Flutter development
+            for ERP systems. Specialized in clean architecture and AI-assisted development.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center items-center">

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cruzleedan.github.io/portfolio/sitemap.xml
