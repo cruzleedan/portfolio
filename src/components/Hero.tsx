@@ -8,16 +8,17 @@ export default function Hero() {
         <div className="text-center space-y-8">
           <div className="space-y-4">
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-              Hi, I'm <span className="text-primary">Alex Johnson</span>
+              Hi, I'm <span className="text-primary">Dan Lee De la Cruz</span>
             </h1>
             <p className="text-2xl md:text-3xl text-muted-foreground">
-              Full Stack Software Engineer
+              Principal Software Engineer
             </p>
           </div>
 
           <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-            I build scalable web applications and love solving complex problems with elegant code.
-            Passionate about creating exceptional user experiences and clean architecture.
+            Software engineer with 9+ years building enterprise mobile and web applications,
+            currently leading Flutter development for an ERP SaaS platform. Specialized in scalable
+            mobile architecture, full-stack development, and AI-assisted coding practices.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center items-center">
@@ -31,7 +32,7 @@ export default function Hero() {
 
           <div className="flex gap-4 justify-center items-center pt-4">
             <a
-              href="https://github.com/alexjohnson"
+              href="https://github.com/cruzleedan"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
@@ -40,7 +41,7 @@ export default function Hero() {
               <Github size={24} />
             </a>
             <a
-              href="https://linkedin.com/in/alexjohnson"
+              href="https://www.linkedin.com/in/dan-lee-de-la-cruz"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"

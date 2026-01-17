@@ -9,13 +9,13 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-center md:text-left">
             <p className="text-muted-foreground">
-              © {currentYear} Alex Johnson. All rights reserved.
+              © {currentYear} Dan Lee De la Cruz. All rights reserved.
             </p>
           </div>
 
           <div className="flex gap-6">
             <a
-              href="https://github.com/alexjohnson"
+              href="https://github.com/cruzleedan"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
@@ -24,7 +24,7 @@ export default function Footer() {
               <Github size={20} />
             </a>
             <a
-              href="https://linkedin.com/in/alexjohnson"
+              href="https://www.linkedin.com/in/dan-lee-de-la-cruz"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"
@@ -33,7 +33,7 @@ export default function Footer() {
               <Linkedin size={20} />
             </a>
             <a
-              href="mailto:alex@example.com"
+              href="mailto:cruzleedan@gmail.com"
               className="text-muted-foreground hover:text-primary transition-colors"
               aria-label="Email"
             >

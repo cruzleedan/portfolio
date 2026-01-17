@@ -1,4 +1,4 @@
-import { Code2, Server, Palette } from 'lucide-react'
+import { Smartphone, Code2, Zap } from 'lucide-react'
 
 export default function About() {
   return (
@@ -11,18 +11,20 @@ export default function About() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <p className="text-lg text-muted-foreground leading-relaxed">
-              I'm a passionate software engineer with over 5 years of experience building
-              web applications. I specialize in React, TypeScript, and Node.js, creating
-              solutions that are both performant and maintainable.
+              I'm a Principal Software Engineer with 9+ years of experience building enterprise
+              mobile and web applications. Currently leading Flutter development for an ERP SaaS
+              platform at Deltek, where I architect scalable, high-performance solutions with
+              emphasis on clean architecture principles.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              My approach combines technical excellence with a deep understanding of user needs.
-              I believe great software is not just about clean code, but about solving real
-              problems and delivering value.
+              My journey spans from modernizing legacy systems to building cutting-edge mobile
+              applications. I specialize in Flutter, full-stack development, and leveraging AI-assisted
+              coding practices to enhance development velocity and code quality.
             </p>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              When I'm not coding, you'll find me contributing to open-source projects,
-              writing technical blog posts, or exploring new technologies.
+              I'm passionate about performance optimization, clean architecture, and creating
+              exceptional user experiences. I believe in continuous learning and staying at the
+              forefront of technology to deliver robust, maintainable solutions.
             </p>
           </div>
 
@@ -30,13 +32,27 @@ export default function About() {
             <div className="flex gap-4 p-6 rounded-lg border bg-card">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
+                  <Smartphone className="w-6 h-6 text-primary" />
+                </div>
+              </div>
+              <div>
+                <h3 className="font-semibold text-lg mb-2">Mobile Development</h3>
+                <p className="text-muted-foreground">
+                  Leading Flutter development with clean architecture, building scalable enterprise mobile apps.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex gap-4 p-6 rounded-lg border bg-card">
+              <div className="flex-shrink-0">
+                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
                   <Code2 className="w-6 h-6 text-primary" />
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">Frontend Development</h3>
+                <h3 className="font-semibold text-lg mb-2">Full-Stack Development</h3>
                 <p className="text-muted-foreground">
-                  Building responsive, accessible, and performant user interfaces with modern frameworks.
+                  Building end-to-end solutions from frontend to backend, specializing in enterprise ERP systems.
                 </p>
               </div>
             </div>
@@ -44,27 +60,13 @@ export default function About() {
             <div className="flex gap-4 p-6 rounded-lg border bg-card">
               <div className="flex-shrink-0">
                 <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Server className="w-6 h-6 text-primary" />
+                  <Zap className="w-6 h-6 text-primary" />
                 </div>
               </div>
               <div>
-                <h3 className="font-semibold text-lg mb-2">Backend Development</h3>
+                <h3 className="font-semibold text-lg mb-2">AI-Assisted Development</h3>
                 <p className="text-muted-foreground">
-                  Designing scalable APIs and microservices with clean architecture patterns.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex gap-4 p-6 rounded-lg border bg-card">
-              <div className="flex-shrink-0">
-                <div className="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <Palette className="w-6 h-6 text-primary" />
-                </div>
-              </div>
-              <div>
-                <h3 className="font-semibold text-lg mb-2">UI/UX Design</h3>
-                <p className="text-muted-foreground">
-                  Creating intuitive and beautiful interfaces that users love to interact with.
+                  Leveraging AI coding assistants to enhance development velocity and code quality.
                 </p>
               </div>
             </div>

@@ -1,30 +1,44 @@
 const skillCategories = [
   {
-    title: "Frontend",
+    title: "Mobile Development",
     skills: [
-      "React", "TypeScript", "Next.js", "Vue.js",
-      "Tailwind CSS", "HTML5", "CSS3", "JavaScript"
+      "Flutter", "Dart", "Cordova", "iOS", "Android",
+      "Mobile Architecture", "State Management", "Riverpod"
     ]
   },
   {
-    title: "Backend",
+    title: "Frontend",
     skills: [
-      "Node.js", "Express", "Python", "PostgreSQL",
-      "MongoDB", "REST APIs", "GraphQL", "Redis"
+      "JavaScript", "TypeScript", "React", "Angular",
+      "ExtJS", "HTML5", "CSS3", "Tailwind CSS"
+    ]
+  },
+  {
+    title: "Backend & Databases",
+    skills: [
+      "Node.js", "Express", "Python", "Flask", ".NET",
+      "PHP", "MySQL", "MSSQL", "REST APIs"
     ]
   },
   {
     title: "Tools & DevOps",
     skills: [
-      "Git", "Docker", "AWS", "CI/CD",
-      "Webpack", "Vite", "Jest", "Linux"
+      "Git", "GitHub Copilot", "CI/CD", "Figma",
+      "Docker", "VS Code", "Bash", "Linux"
     ]
   },
   {
-    title: "Soft Skills",
+    title: "ERP & Enterprise",
     skills: [
-      "Problem Solving", "Team Collaboration", "Agile/Scrum",
-      "Code Review", "Technical Writing", "Mentoring"
+      "ERP Systems", "CRM", "Time & Expense", "Business Intelligence",
+      "Data Warehousing", "ETL", "Legacy Modernization"
+    ]
+  },
+  {
+    title: "Practices & Methodologies",
+    skills: [
+      "Clean Architecture", "AI-Assisted Development", "Agile/Scrum",
+      "Performance Optimization", "Code Review", "Technical Leadership"
     ]
   }
 ]
@@ -37,10 +51,10 @@ export default function Skills() {
           Skills & Technologies
         </h2>
         <p className="text-center text-muted-foreground mb-12 text-lg">
-          Technologies and tools I work with regularly.
+          9+ years of experience with enterprise mobile and full-stack development.
         </p>
 
-        <div className="grid md:grid-cols-2 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {skillCategories.map((category, index) => (
             <div key={index} className="space-y-4">
               <h3 className="text-2xl font-semibold border-l-4 border-primary pl-4">
