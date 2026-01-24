@@ -13,7 +13,10 @@ services:
       - NODE_ENV=production
     networks:
       - portfolio-network
+      - caddy-network
 
 networks:
   portfolio-network:
     driver: bridge
+  caddy-network:
+    external: true
