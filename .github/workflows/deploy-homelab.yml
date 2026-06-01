@@ -1,0 +1,43 @@
+name: Deploy to Homelab
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+concurrency:
+  group: homelab-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: self-hosted   # runs directly on your homelab server
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout latest code
+        uses: actions/checkout@v4
+
+      - name: Build and restart container
+        run: |
+          docker compose pull --quiet || true
+          docker compose up -d --build --remove-orphans
+
+      - name: Remove unused images
+        run: docker image prune -f
+
+      - name: Health check
+        run: |
+          echo "Waiting for container to be healthy..."
+          for i in $(seq 1 12); do
+            STATUS=$(docker inspect --format='{{.State.Health.Status}}' portfolio-app 2>/dev/null || echo "starting")
+            echo "  attempt $i: $STATUS"
+            if [ "$STATUS" = "healthy" ]; then
+              echo "Container is healthy"
+              exit 0
+            fi
+            sleep 5
+          done
+          echo "Container did not become healthy in time"
+          docker logs portfolio-app --tail 50
+          exit 1
