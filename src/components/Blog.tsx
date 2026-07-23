@@ -21,19 +21,19 @@ const Blog = () => {
   useEffect(() => {
     // Import all markdown files from posts directory
     const loadPosts = async () => {
-      const postModules = import.meta.glob('/posts/*.md', { query: '?raw', import: 'default' });
+      const postModules = import.meta.glob('/posts/articles/**/*.md', { query: '?raw', import: 'default' });
       const loadedPosts: BlogPost[] = [];
 
       for (const path in postModules) {
         const content = await postModules[path]();
         const { data } = matter(content as string);
-        const slug = path.replace('/posts/', '').replace('.md', '');
+        const slug = path.replace('/posts/articles/', '').replace('.md', '');
 
         loadedPosts.push({
           slug,
           title: data.title,
           date: data.date,
-          excerpt: data.excerpt,
+          excerpt: data.excerpt || data.description || '',
           tags: data.tags || [],
         });
       }

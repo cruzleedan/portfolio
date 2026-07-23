@@ -30,7 +30,8 @@ interface TocItem {
 }
 
 const BlogPost = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const params = useParams();
+  const slug = params['*'];
   const [post, setPost] = useState<PostData | null>(null);
   const [allPosts, setAllPosts] = useState<PostListItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -124,13 +125,13 @@ const BlogPost = () => {
 
   useEffect(() => {
     const loadAllPosts = async () => {
-      const postModules = import.meta.glob('/posts/*.md', { query: '?raw', import: 'default' });
+      const postModules = import.meta.glob('/posts/articles/**/*.md', { query: '?raw', import: 'default' });
       const loadedPosts: PostListItem[] = [];
 
       for (const path in postModules) {
         const content = await postModules[path]();
         const { data } = matter(content as string);
-        const postSlug = path.replace('/posts/', '').replace('.md', '');
+        const postSlug = path.replace('/posts/articles/', '').replace('.md', '');
 
         loadedPosts.push({
           slug: postSlug,
@@ -149,8 +150,8 @@ const BlogPost = () => {
   useEffect(() => {
     const loadPost = async () => {
       try {
-        const modules = import.meta.glob('/posts/*.md', { query: '?raw', import: 'default' });
-        const postPath = `/posts/${slug}.md`;
+        const modules = import.meta.glob('/posts/articles/**/*.md', { query: '?raw', import: 'default' });
+        const postPath = `/posts/articles/${slug}.md`;
         const loader = modules[postPath];
 
         if (!loader) {

@@ -32,7 +32,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/blog" element={<BlogList />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/blog/*" element={<BlogPost />} />
           </Routes>
         </main>
         <Footer />
