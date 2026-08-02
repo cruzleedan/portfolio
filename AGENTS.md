@@ -12,6 +12,7 @@ Personal portfolio site.
 portfolio/
 ├── src/                    # React source
 ├── posts/                  # Blog/content posts (Markdown)
+├── content/                # Site content source material (e.g. profile.md for About section)
 ├── public/                 # Static assets
 ├── index.html
 ├── Dockerfile
